@@ -11,11 +11,28 @@ const Login = () => {
   const handleGoogleSignIn = async () => {
     try {
       await signInWithGoogle();
-      toast.success('SingIn successfully')
-      navigate('/')
+      toast.success("SingIn successfully");
+      navigate("/");
     } catch (error) {
       console.log(error);
-      toast.error(error?.message)
+      toast.error(error?.message);
+    }
+  };
+
+  const handleSignIn = async (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const email = form.email.value;
+    const pass = form.password.value;
+    console.log({ email, pass });
+    try {
+      const result = await signIn(email, pass);
+      console.log(result);
+      navigate("/");
+      toast.success("SingIn successfully");
+    } catch (err) {
+      console.log(err);
+      toast.error(err?.message);
     }
   };
 
@@ -77,7 +94,7 @@ const Login = () => {
 
             <span className="w-1/5 border-b dark:border-gray-400 lg:w-1/4"></span>
           </div>
-          <form>
+          <form onSubmit={handleSignIn}>
             <div className="mt-4">
               <label
                 className="block mb-2 text-sm font-medium text-gray-600 "
