@@ -4,7 +4,7 @@ import Navbar from "../Components/Navbar";
 
 const Main = () => {
     return (
-        <div>
+        <div className="font-Lato">
             <Navbar></Navbar>
             <Outlet></Outlet>
         </div>
