@@ -19,38 +19,43 @@ const JobDetails = () => {
     max_price,
     min_price,
     description,
-    buyer_email,
+    buyer,
   } = job;
 
   const handleFormSubmission = async (e) => {
-    if(user?.email === buyer_email) return toast.error('Action not permitted')
     e.preventDefault();
+    if (user?.email === buyer?.email) return toast.error("Action not permitted");
     const form = e.target;
     const job_id = _id;
     const price = parseFloat(form.price.value);
-    if(price<parseFloat(min_price)) return toast.error('Offer more or at least equal to minimum price')
+    if (price < parseFloat(min_price))
+      return toast.error("Offer more or at least equal to minimum price");
     const email = user?.email;
     const comment = form.comment.value;
-    const deadline=startDate
+    const deadline = startDate;
     const status = "pending";
     const bidData = {
       job_id,
       price,
       deadline,
       email,
+      buyer_email:buyer?.email,
       comment,
       job_title,
       category,
       status,
-      buyer_email,
+      buyer,
     };
-    console.log(bidData)
+    console.log(buyer);
 
-    try{
-      const {data}=await axios.post(`${import.meta.env.VITE_API_URL}/bid` , bidData)
-      console.log(data)
-    }catch(err){
-      console.log(err)
+    try {
+      const { data } = await axios.post(
+        `${import.meta.env.VITE_API_URL}/bid`,
+        bidData
+      );
+      console.log(data);
+    } catch (err) {
+      console.log(err);
     }
   };
 
@@ -60,7 +65,7 @@ const JobDetails = () => {
       <div className="flex-1  px-4 py-7 bg-white rounded-md shadow-md md:min-h-[350px]">
         <div className="flex items-center justify-between">
           <span className="text-sm font-light text-gray-800 ">
-            Deadline: {deadline}
+            Deadline: {new Date(deadline).toLocaleDateString()}
           </span>
           <span className="px-4 py-1 text-xs text-blue-800 uppercase bg-blue-200 rounded-full ">
             {category}
@@ -78,13 +83,13 @@ const JobDetails = () => {
           </p>
           <div className="flex items-center gap-5">
             <div>
-              <p className="mt-2 text-sm  text-gray-600 ">Name: Jhankar Vai.</p>
+              <p className="mt-2 text-sm  text-gray-600 ">Name: {buyer?.name}</p>
               <p className="mt-2 text-sm  text-gray-600 ">
-                Email: jhankar@mahbub.com
+                Email: {buyer?.email}
               </p>
             </div>
             <div className="rounded-full object-cover overflow-hidden w-14 h-14">
-              <img src="" alt="" />
+              <img src={buyer?.photo} alt="" />
             </div>
           </div>
           <p className="mt-6 text-lg font-bold text-gray-600 ">
@@ -140,9 +145,11 @@ const JobDetails = () => {
             <div className="flex flex-col gap-2 ">
               <label className="text-gray-700">Deadline</label>
 
-             <DatePicker
-             className="border p-2 rounded-md w-full"
-              selected={startDate} onChange={(date) => setStartDate(date)} />
+              <DatePicker
+                className="border p-2 rounded-md w-full"
+                selected={startDate}
+                onChange={(date) => setStartDate(date)}
+              />
             </div>
           </div>
 

@@ -6,12 +6,14 @@ import Register from "../Pages/Authentication/Register";
 import JobDetails from "../Pages/JobDetails";
 import AddJob from "../Pages/AddJob";
 import ErrorPage from "../Components/ErrorPage";
+import MyPostedJobs from "../Pages/MyPostedJobs";
+import PrivateRoutes from "./PrivateRoutes";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Main></Main>,
-    errorElement:<ErrorPage></ErrorPage>,
+    errorElement: <ErrorPage></ErrorPage>,
     children: [
       {
         path: "/",
@@ -26,14 +28,23 @@ const router = createBrowserRouter([
         element: <Register></Register>,
       },
       {
-        path:'/job/:id',
-        element:<JobDetails></JobDetails>,
-        loader:({params})=>fetch(`${import.meta.env.VITE_API_URL}/job/${params.id}`)
+        path: "/job/:id",
+        element: <JobDetails></JobDetails>,
+        loader: ({ params }) =>
+          fetch(`${import.meta.env.VITE_API_URL}/job/${params.id}`),
       },
       {
-        path:'/addJob',
-        element:<AddJob></AddJob>
-      }
+        path: "/addJob",
+        element: <AddJob></AddJob>,
+      },
+      {
+        path: "/myPostedJobs",
+        element: (
+          <PrivateRoutes>
+            <MyPostedJobs></MyPostedJobs>
+          </PrivateRoutes>
+        ),
+      },
     ],
   },
 ]);
