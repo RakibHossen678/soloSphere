@@ -3,11 +3,11 @@ import logoImg from "../assets/logo.png";
 import { AuthContext } from "../Provider/AuthProvider";
 import { Link } from "react-router-dom";
 const Navbar = () => {
-  const { user ,logOut} = useContext(AuthContext);
+  const { user, logOut } = useContext(AuthContext);
   return (
     <div className="navbar bg-base-100 shadow-sm container  px-16 mx-auto">
       <div className="flex-1">
-        <Link to='/' className="flex gap-2 items-center">
+        <Link to="/" className="flex gap-2 items-center">
           <img className="w-auto h-7" src={logoImg} alt="" />
           <span className="font-bold">SoloSphere</span>
         </Link>
@@ -15,12 +15,12 @@ const Navbar = () => {
       <div className="flex-none">
         <ul className="menu menu-horizontal px-1">
           <li>
-            <Link to='/'>Home</Link>
+            <Link to="/">Home</Link>
           </li>
 
           {!user && (
             <li>
-              <Link to='/login'>Login</Link>
+              <Link to="/login">Login</Link>
             </li>
           )}
         </ul>
@@ -45,21 +45,24 @@ const Navbar = () => {
               className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
             >
               <li>
-                <Link to='/addJob' className="justify-between">Add Job</Link>
+                <Link to="/addJob" className="justify-between">
+                  Add Job
+                </Link>
               </li>
               <li>
-                <Link to='/myPostedJobs'>My Posted Jobs</Link>
+                <Link to="/myPostedJobs">My Posted Jobs</Link>
               </li>
               <li>
-                <Link to='/myBids'>My Bids</Link>
+                <Link to="/myBids">My Bids</Link>
               </li>
               <li>
-                <Link to='/bidRequest'>Bid Requests</Link>
+                <Link to="/bidRequest">Bid Requests</Link>
               </li>
               <li className="mt-2">
                 <button
-                onClick={logOut}
-                 className="bg-gray-200 block text-center">
+                  onClick={logOut}
+                  className="bg-gray-200 block text-center"
+                >
                   Logout
                 </button>
               </li>

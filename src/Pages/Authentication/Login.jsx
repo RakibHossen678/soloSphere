@@ -4,17 +4,25 @@ import logo from "../../assets/logo.png";
 import { useContext } from "react";
 import { AuthContext } from "../../Provider/AuthProvider";
 import toast from "react-hot-toast";
+import axios from "axios";
 
 const Login = () => {
   const navigate = useNavigate();
-  const location=useLocation()
-  const from=location.state
+  const location = useLocation();
+  const from = location.state;
   const { signIn, signInWithGoogle } = useContext(AuthContext);
   const handleGoogleSignIn = async () => {
     try {
-      await signInWithGoogle();
+      const result = await signInWithGoogle();
+
+      const { data } = await axios.post(
+        `${import.meta.env.VITE_API_URL}/jwt`,
+        { email: result?.user?.email },
+        { withCredentials: true }
+      );
+      console.log(data);
       toast.success("SingIn successfully");
-      navigate(from ? from :"/");
+      navigate(from ? from : "/");
     } catch (error) {
       console.log(error);
       toast.error(error?.message);
@@ -30,7 +38,13 @@ const Login = () => {
     try {
       const result = await signIn(email, pass);
       console.log(result);
-      navigate(from ? from :"/");
+      const { data } = await axios.post(
+        `${import.meta.env.VITE_API_URL}/jwt`,
+        { email: result?.user?.email },
+        { withCredentials: true }
+      );
+      console.log(data);
+      navigate(from ? from : "/");
       toast.success("SingIn successfully");
     } catch (err) {
       console.log(err);

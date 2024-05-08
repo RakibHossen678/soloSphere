@@ -12,7 +12,6 @@ const JobCard = ({ job }) => {
     max_price,
     min_price,
     description,
-    
   } = job;
   return (
     <Link
@@ -34,7 +33,7 @@ const JobCard = ({ job }) => {
         </h1>
 
         <p title={description} className="mt-2 text-sm text-gray-600 ">
-        {description.substring(0,70)}.......
+          {description.substring(0, 70)}.......
         </p>
         <p className="mt-2 text-sm font-bold text-gray-600 ">
           Range: ${min_price} - ${max_price}

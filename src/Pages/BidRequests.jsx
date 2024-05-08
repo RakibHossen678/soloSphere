@@ -15,15 +15,17 @@ const BidRequests = () => {
     setBids(data);
   };
   //  handelStatus
-  const handelStatus = async(id, prevStatus, status) => {
+  const handelStatus = async (id, prevStatus, status) => {
     console.log(id, status, prevStatus);
-    if(prevStatus===status)return console.log('sorry')
-    const { data } =await axios.patch(`${import.meta.env.VITE_API_URL}/bid/${id}`, {
-
-      status,
-    });
+    if (prevStatus === status) return console.log("sorry");
+    const { data } = await axios.patch(
+      `${import.meta.env.VITE_API_URL}/bid/${id}`,
+      {
+        status,
+      }
+    );
     console.log(data);
-    getData()
+    getData();
   };
   return (
     <section className="w-[95%] my-10 px-4 mx-auto pt-12">
@@ -164,11 +166,12 @@ const BidRequests = () => {
                           </button>
 
                           <button
-                          onClick={() =>
-                            handelStatus(bid._id, bid.status, "Rejected")
-                          }
-                           disabled={bid.status === "Complete"}
-                           className="text-gray-500 transition-colors duration-200   hover:text-yellow-500 focus:outline-none">
+                            onClick={() =>
+                              handelStatus(bid._id, bid.status, "Rejected")
+                            }
+                            disabled={bid.status === "Complete"}
+                            className="text-gray-500 transition-colors duration-200   hover:text-yellow-500 focus:outline-none"
+                          >
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
                               fill="none"

@@ -11,7 +11,6 @@ import {
 } from "firebase/auth";
 import app from "../firebase/firebase.config";
 
-
 export const AuthContext = createContext(null);
 const auth = getAuth(app);
 const googleProvider = new GoogleAuthProvider();
@@ -53,6 +52,7 @@ const AuthProvider = ({ children }) => {
       setUser(currentUser);
       console.log("CurrentUser-->", currentUser);
       setLoading(false);
+      
     });
     return () => {
       return unsubscribe();

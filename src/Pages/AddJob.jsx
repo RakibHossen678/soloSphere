@@ -18,7 +18,7 @@ const AddJob = () => {
     const category = form.category.value;
     const min_price = parseFloat(form.min_price.value);
     const max_price = parseFloat(form.max_price.value);
-    const description=form.description.value
+    const description = form.description.value;
     const jobData = {
       job_title,
       deadline,
@@ -26,23 +26,23 @@ const AddJob = () => {
       min_price,
       max_price,
       email,
-      buyer:{
+      buyer: {
         email,
-        name:user?.displayName,
-        photo:user?.photoURL
-        
+        name: user?.displayName,
+        photo: user?.photoURL,
       },
-      description
-      
+      description,
     };
-    try{
-      const {data}=await axios.post(`${import.meta.env.VITE_API_URL}/job`,jobData)
-      console.log(data)
-      toast.success('Job data Update Successfully')
-      navigate('/myPostedJobs')
-    }
-    catch(err){
-      console.log(err)
+    try {
+      const { data } = await axios.post(
+        `${import.meta.env.VITE_API_URL}/job`,
+        jobData
+      );
+      console.log(data);
+      toast.success("Job data Update Successfully");
+      navigate("/myPostedJobs");
+    } catch (err) {
+      console.log(err);
     }
   };
   return (

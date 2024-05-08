@@ -10,7 +10,15 @@ const UpdateJob = () => {
   const navigate = useNavigate();
   const { user } = useContext(AuthContext);
   console.log(job);
-  const { _id,job_title, category,deadline, max_price, min_price, description } = job;
+  const {
+    _id,
+    job_title,
+    category,
+    deadline,
+    max_price,
+    min_price,
+    description,
+  } = job;
   const [startDate, setStartDate] = useState(new Date(deadline) || new Date());
 
   const handleFormSubmit = async (e) => {
@@ -40,12 +48,12 @@ const UpdateJob = () => {
 
     try {
       const { data } = await axios.put(
-        `${import.meta.env.VITE_API_URL}/job/${_id}`,jobData
+        `${import.meta.env.VITE_API_URL}/job/${_id}`,
+        jobData
       );
       console.log(data);
       toast.success("Job data updated Successfully");
-      navigate('/myPostedJobs')
-     
+      navigate("/myPostedJobs");
     } catch (err) {
       console.log(err);
       toast.error(err.message);
@@ -102,7 +110,7 @@ const UpdateJob = () => {
                 Category
               </label>
               <select
-              defaultValue={category}
+                defaultValue={category}
                 name="category"
                 id="category"
                 className="border p-2 rounded-md"

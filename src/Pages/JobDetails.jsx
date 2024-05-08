@@ -8,7 +8,7 @@ import toast from "react-hot-toast";
 
 const JobDetails = () => {
   const job = useLoaderData();
-  const navigate=useNavigate()
+  const navigate = useNavigate();
   const { user } = useContext(AuthContext);
   const [startDate, setStartDate] = useState(new Date());
 
@@ -25,7 +25,8 @@ const JobDetails = () => {
 
   const handleFormSubmission = async (e) => {
     e.preventDefault();
-    if (user?.email === buyer?.email) return toast.error("Action not permitted");
+    if (user?.email === buyer?.email)
+      return toast.error("Action not permitted");
     const form = e.target;
     const job_id = _id;
     const price = parseFloat(form.price.value);
@@ -40,7 +41,7 @@ const JobDetails = () => {
       price,
       deadline,
       email,
-      buyer_email:buyer?.email,
+      buyer_email: buyer?.email,
       comment,
       job_title,
       category,
@@ -55,8 +56,8 @@ const JobDetails = () => {
         bidData
       );
       console.log(data);
-      toast.success('Bid placed successfully')
-      navigate('/myBids')
+      toast.success("Bid placed successfully");
+      navigate("/myBids");
     } catch (err) {
       console.log(err);
     }
@@ -86,7 +87,9 @@ const JobDetails = () => {
           </p>
           <div className="flex items-center gap-5">
             <div>
-              <p className="mt-2 text-sm  text-gray-600 ">Name: {buyer?.name}</p>
+              <p className="mt-2 text-sm  text-gray-600 ">
+                Name: {buyer?.name}
+              </p>
               <p className="mt-2 text-sm  text-gray-600 ">
                 Email: {buyer?.email}
               </p>
