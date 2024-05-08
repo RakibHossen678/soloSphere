@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import bgImg from "../../assets/register.jpg";
 import logo from "../../assets/logo.png";
 import { useContext } from "react";
@@ -9,12 +9,14 @@ const Register = () => {
   const { user, setUser, updateUserProfile, signInWithGoogle, createUser } =
     useContext(AuthContext);
   const navigate = useNavigate();
+  const location=useLocation()
+  const from=location.state
 
   const handleGoogleSignIn = async () => {
     try {
       await signInWithGoogle();
       toast.success("SingIn successfully");
-      navigate("/");
+      navigate(from ? from :"/");
     } catch (error) {
       console.log(error);
       toast.error(error?.message);
@@ -36,7 +38,7 @@ const Register = () => {
       await updateUserProfile(name, photo);
       setUser({ ...user, photoURL: photo, displayName: name });
       toast.success("SingIn successfully");
-      navigate("/");
+      navigate(from ? from :"/");
     } catch (error) {
       console.log(error);
       toast.error(error?.message);
