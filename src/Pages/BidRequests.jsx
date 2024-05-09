@@ -1,32 +1,54 @@
-import axios from "axios";
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { AuthContext } from "../Provider/AuthProvider";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import useAxiosSecure from "../Hooks/useAxiosSecure";
+import toast from "react-hot-toast";
 
 const BidRequests = () => {
   const { user } = useContext(AuthContext);
-  const [bids, setBids] = useState([]);
-  useEffect(() => {
-    getData();
-  }, [user]);
+  const axiosSecure = useAxiosSecure();
+
+  const {
+    data: bids = [],
+    isLoading,
+    refetch,
+    isError,
+    error,
+  } = useQuery({
+    queryFn: () => getData(),
+    queryKey: ["bids",user?.email],
+  });
+  console.log(bids);
+
+  // const [bids, setBids] = useState([]);
+  // useEffect(() => {
+  //   getData();
+  // }, [user]);
   const getData = async () => {
-    const { data } = await axios(
-      `${import.meta.env.VITE_API_URL}/bidRequest/${user?.email}`,{withCredentials:true}
-    );
-    setBids(data);
+    const { data } = await axiosSecure(`/bidRequest/${user?.email}`);
+    return data;
   };
+
+  const { mutateAsync } = useMutation({
+    mutationFn: async ({ id, status }) => {
+      const { data } = await axiosSecure.patch(`/bid/${id}`, { status });
+      console.log(data);
+    },
+    onSuccess: () => {
+      toast.success("Wow,data updated");
+      refetch();
+    },
+  });
+
+
   //  handelStatus
   const handelStatus = async (id, prevStatus, status) => {
     console.log(id, status, prevStatus);
     if (prevStatus === status) return console.log("sorry");
-    const { data } = await axios.patch(
-      `${import.meta.env.VITE_API_URL}/bid/${id}`,
-      {
-        status,
-      }
-    );
-    console.log(data);
-    getData();
+    await mutateAsync({ id, status });
   };
+  if (isLoading) return <p>data is still loading....</p>;
+
   return (
     <section className="w-[95%] my-10 px-4 mx-auto pt-12">
       <div className="flex items-center gap-x-3">
