@@ -1,14 +1,15 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { AuthContext } from "../Provider/AuthProvider";
+
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import toast from "react-hot-toast";
+import useAuth from "../Hooks/useAuth";
 const AddJob = () => {
   const [startDate, setStartDate] = useState(new Date());
   const navigate = useNavigate();
-  const { user } = useContext(AuthContext);
+  const { user } = useAuth();
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     const form = e.target;
